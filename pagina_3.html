@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guia Anti-Phishing — Cibersegurança</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --red:    #e53935;
+  --dark:   #0f0f0f;
+  --darker: #080808;
+  --card:   #161616;
+  --border: rgba(255,255,255,0.07);
+  --text:   #c8c8c8;
+  --white:  #f0f0f0;
+  --green:  #00c853;
+  --yellow: #ffd600;
+  --orange: #ff6d00;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--darker);
+  border-bottom: 1px solid var(--border);
+  padding: 64px 24px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(229,57,53,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(229,57,53,0.12);
+  border: 1px solid rgba(229,57,53,0.3);
+  color: var(--red);
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 6vw, 60px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+.hero h1 span { color: var(--red); }
+.hero p {
+  max-width: 540px;
+  margin: 0 auto 32px;
+  font-size: 16px;
+  color: #888;
+  line-height: 1.6;
+}
+.hero-warning {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(229,57,53,0.08);
+  border: 1px solid rgba(229,57,53,0.2);
+  border-radius: 4px;
+  padding: 14px 22px;
+  max-width: 560px;
+  text-align: left;
+  font-size: 14px;
+  color: #ddd;
+  line-height: 1.5;
+}
+.hero-warning .icon { font-size: 28px; flex-shrink: 0; }
+
+/* ── NAV PILLS ── */
+.nav-pills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 28px 24px;
+  background: var(--darker);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.nav-pills a {
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  padding: 6px 14px;
+  border: 1px solid #222;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.nav-pills a:hover { color: var(--white); border-color: #444; }
+
+/* ── MAIN ── */
+main {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ── SECTION ── */
+section {
+  padding-top: 64px;
+}
+.section-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+section h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+section > p {
+  color: #888;
+  font-size: 15px;
+  margin-bottom: 28px;
+  max-width: 640px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0 0;
+}
+
+/* ── INFO CARD ── */
+.info-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 22px 24px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.info-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--red);
+}
+.info-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.info-card p { font-size: 14px; color: #777; line-height: 1.6; }
+
+/* ── SINAIS GRID ── */
+.sinais-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.sinal-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: border-color 0.2s;
+}
+.sinal-card:hover { border-color: rgba(229,57,53,0.3); }
+.sinal-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.sinal-card h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.sinal-card p { font-size: 12px; color: #666; line-height: 1.5; }
+
+/* ── EXEMPLO EMAIL ── */
+.email-example {
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.email-bar {
+  background: #111;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.email-bar-dot { width:10px; height:10px; border-radius:50%; }
+.email-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: #555;
+}
+.email-header .row { display:flex; gap:8px; margin-bottom:4px; }
+.email-header .label { color: #333; min-width: 50px; }
+.email-header .val { color: #888; }
+.email-header .flagged { color: var(--red); font-weight: 600; }
+.email-body-ex {
+  padding: 20px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.7;
+}
+.email-body-ex .highlight {
+  background: rgba(229,57,53,0.12);
+  border-bottom: 1px dashed var(--red);
+  color: #ccc;
+  cursor: help;
+  position: relative;
+}
+.anno {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--red);
+}
+.anno-num {
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── PASSOS ── */
+.steps {
+  counter-reset: step;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+.step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px 20px 18px 64px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.step:hover { border-color: rgba(255,255,255,0.15); }
+.step::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #222;
+}
+.step h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.step p { font-size: 13px; color: #666; line-height: 1.5; }
+
+/* ── BOAS PRÁTICAS ── */
+.praticas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.pratica-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+}
+.pratica-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+.badge-green  { background: rgba(0,200,83,0.1);   color: var(--green);  border: 1px solid rgba(0,200,83,0.2); }
+.badge-yellow { background: rgba(255,214,0,0.1);  color: var(--yellow); border: 1px solid rgba(255,214,0,0.2); }
+.badge-orange { background: rgba(255,109,0,0.1);  color: var(--orange); border: 1px solid rgba(255,109,0,0.2); }
+.badge-red    { background: rgba(229,57,53,0.1);  color: var(--red);    border: 1px solid rgba(229,57,53,0.2); }
+.pratica-card h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.pratica-card p { font-size: 13px; color: #666; line-height: 1.5; }
+
+/* ── O QUE FAZER ── */
+.fazer-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.fazer-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px 18px;
+}
+.fazer-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.fazer-item h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+.fazer-item p { font-size: 12px; color: #666; line-height: 1.5; }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--red);
+  border-radius: 4px;
+  padding: 32px;
+  text-align: center;
+  margin-top: 48px;
+}
+.final-cta h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.final-cta p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 22px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.final-cta a {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 13px 30px;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.final-cta a:hover { background: #c62828; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--darker);
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  text-align: center;
+  font-size: 12px;
+  color: #333;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.hero > * { animation: fadeUp 0.5s ease both; }
+.hero-label  { animation-delay: 0.05s; }
+.hero h1     { animation-delay: 0.15s; }
+.hero p      { animation-delay: 0.25s; }
+.hero-warning{ animation-delay: 0.35s; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">⚠️ Exercício de Cibersegurança</div>
+  <h1>Acabou de ser<br><span>vítima de phishing.</span></h1>
+  <p>Este foi um exercício simulado. Nenhum dado foi realmente comprometido. Mas numa situação real, as consequências poderiam ser graves.</p>
+  <div class="hero-warning">
+    <span class="icon">🔒</span>
+    <div>Leia este guia com atenção. Aprenda a reconhecer ataques de phishing, como se proteger, e o que fazer se suspeitar de um email malicioso.</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-pills">
+  <a href="#oque">O que é phishing</a>
+  <a href="#tipos">Tipos de ataque</a>
+  <a href="#sinais">Como detetar</a>
+  <a href="#exemplo">Exemplo real</a>
+  <a href="#praticas">Boas práticas</a>
+  <a href="#fazer">O que fazer</a>
+</nav>
+
+<main>
+
+  <!-- O QUE É PHISHING -->
+  <section id="oque">
+    <div class="section-label">01 — Fundamentos</div>
+    <h2>O que é phishing?</h2>
+    <p>Uma das formas mais comuns de ataque informático — e das mais eficazes.</p>
+    <div class="divider"></div>
+
+    <div style="margin-top:20px;">
+      <div class="info-card">
+        <h3>Definição</h3>
+        <p>Phishing é uma técnica de engenharia social em que atacantes se fazem passar por entidades legítimas (bancos, governo, empresas conhecidas) para enganar as vítimas e obter informações sensíveis como passwords, dados bancários ou documentos de identidade.</p>
+      </div>
+      <div class="info-card">
+        <h3>Porquê funciona?</h3>
+        <p>Porque explora emoções humanas: urgência, medo, ganância ou curiosidade. Um email que diz "a sua conta será bloqueada em 24 horas" ou "ganhou um prémio" ativa instintos que levam a agir sem pensar.</p>
+      </div>
+      <div class="info-card">
+        <h3>O impacto real</h3>
+        <p>A nível global, o phishing é responsável por mais de 80% dos incidentes de cibersegurança reportados. Uma única credencial comprometida pode dar acesso a sistemas críticos de toda uma organização.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIPOS -->
+  <section id="tipos">
+    <div class="section-label">02 — Modalidades</div>
+    <h2>Tipos de ataque</h2>
+    <p>O phishing tem muitas formas — reconhecer cada uma é o primeiro passo para se defender.</p>
+    <div class="divider"></div>
+
+    <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
+      <div class="fazer-item">
+        <span class="fazer-icon">📧</span>
+        <div>
+          <h4>Email Phishing</h4>
+          <p>O mais comum. Emails em massa que imitam marcas conhecidas (bancos, serviços de entrega, governo). Contêm links para sites falsos ou anexos maliciosos.</p>
+        </div>
+      </div>
+      <div class="fazer-item">
+        <span class="fazer-icon">🎯</span>
+        <div>
+          <h4>Spear Phishing</h4>
+          <p>Ataques direcionados a uma pessoa ou organização específica. Usam informação pessoal (nome, cargo, empresa) para parecerem mais credíveis. Muito mais difíceis de detetar.</p>
+        </div>
+      </div>
+      <div class="fazer-item">
+        <span class="fazer-icon">📱</span>
+        <div>
+          <h4>Smishing (SMS)</h4>
+          <p>Phishing via SMS. Mensagens falsas de bancos, CTT ou operadoras com links para sites fraudulentos. Muito eficaz porque as pessoas confiam mais em SMS do que email.</p>
+        </div>
+      </div>
+      <div class="fazer-item">
+        <span class="fazer-icon">📞</span>
+        <div>
+          <h4>Vishing (Chamada)</h4>
+          <p>Fraude por chamada telefónica. O atacante faz-se passar por suporte técnico, banco ou autoridade. Pode ser combinado com outros ataques para aumentar a credibilidade.</p>
+        </div>
+      </div>
+      <div class="fazer-item">
+        <span class="fazer-icon">🐋</span>
+        <div>
+          <h4>Whaling</h4>
+          <p>Spear phishing direcionado a executivos de topo (CEO, CFO). Os emails imitam comunicações internas urgentes e pedem transferências bancárias ou acesso a dados confidenciais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SINAIS -->
+  <section id="sinais">
+    <div class="section-label">03 — Deteção</div>
+    <h2>Como detetar um email suspeito</h2>
+    <p>Antes de clicar em qualquer link ou fornecer dados, verifique estes sinais de alerta.</p>
+    <div class="divider"></div>
+
+    <div class="sinais-grid" style="margin-top:20px;">
+      <div class="sinal-card">
+        <span class="sinal-icon">🔍</span>
+        <div>
+          <h4>Endereço suspeito</h4>
+          <p>O remetente usa um domínio parecido mas não exato — ex: @fpf-portugal.com em vez de @fpf.pt</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-icon">⏰</span>
+        <div>
+          <h4>Urgência artificial</h4>
+          <p>"Responda em 24h", "conta bloqueada", "última oportunidade" — pressão para agir sem pensar.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-icon">🎁</span>
+        <div>
+          <h4>Oferta demasiado boa</h4>
+          <p>Prémios, sorteios, reembolsos inesperados. Se parece bom demais para ser verdade, provavelmente é fraude.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-icon">🔗</span>
+        <div>
+          <h4>Links duvidosos</h4>
+          <p>Passe o rato por cima do link (sem clicar) e veja para onde aponta. URLs encurtados ou estranhos são sinal de alerta.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-icon">📎</span>
+        <div>
+          <h4>Anexos inesperados</h4>
+          <p>Ficheiros .exe, .zip, .docm não solicitados. Mesmo PDFs podem conter malware. Nunca abra anexos que não esperava.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-icon">✏️</span>
+        <div>
+          <h4>Erros ortográficos</h4>
+          <p>Textos mal escritos, traduções estranhas ou formatação estranha são sinais de emails fraudulentos criados apressadamente.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-icon">🔐</span>
+        <div>
+          <h4>Pedido de dados sensíveis</h4>
+          <p>Nenhuma entidade legítima pede passwords, NIF ou dados bancários por email. Nunca forneça estes dados.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-icon">👤</span>
+        <div>
+          <h4>Saudação genérica</h4>
+          <p>"Caro cliente", "Dear user" — entidades legítimas conhecem o seu nome. Saudações genéricas são sinal de email em massa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXEMPLO ANOTADO -->
+  <section id="exemplo">
+    <div class="section-label">04 — Caso de Estudo</div>
+    <h2>Anatomia deste email falso</h2>
+    <p>O email que recebeu tinha vários elementos clássicos de phishing. Veja onde estão os sinais de alerta.</p>
+    <div class="divider"></div>
+
+    <div class="email-example" style="margin-top:20px;">
+      <div class="email-bar">
+        <div class="email-bar-dot" style="background:#ff5f57;"></div>
+        <div class="email-bar-dot" style="background:#febc2e;"></div>
+        <div class="email-bar-dot" style="background:#28c840;"></div>
+        <span style="margin-left:10px; font-size:11px; color:#444;">Email recebido</span>
+      </div>
+      <div class="email-header">
+        <div class="row"><span class="label">De:</span><span class="val flagged">sorteios@fpf-mundial2026.com ⚠️</span></div>
+        <div class="row"><span class="label">Para:</span><span class="val">colaborador@empresa.pt</span></div>
+        <div class="row"><span class="label">Assunto:</span><span class="val flagged">🏆 URGENTE: Sorteio bilhetes Portugal vs Chile — Inscrição fecha HOJE ⚠️</span></div>
+      </div>
+      <div class="email-body-ex">
+        <p>Caro(a) <span class="highlight" title="Saudação genérica — não sabe o seu nome">colaborador(a)</span>,</p>
+        <br>
+        <p>A <span class="highlight" title="Imitação de entidade oficial">Federação Portuguesa de Futebol</span>, em parceria com o Governo Português, anuncia um sorteio <span class="highlight" title="Urgência artificial para pressionar a agir rapidamente">EXCLUSIVO e URGENTE</span> de bilhetes para o jogo Portugal vs Chile!</p>
+        <br>
+        <p>🎁 Prémio: <span class="highlight" title="Oferta demasiado boa — voo + hotel + bilhetes">2 bilhetes + voo + 3 noites de hotel em Filadélfia</span></p>
+        <br>
+        <p><span class="highlight" title="Prazo falso para criar urgência">⏰ Inscrições encerram em 4 DIAS.</span> Clique abaixo para participar:</p>
+        <br>
+        <p><span class="highlight" title="Link para site falso — não é o domínio oficial fpf.pt">👉 [PARTICIPAR NO SORTEIO]</span></p>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div class="anno"><span class="anno-num">1</span> <span>Domínio falso: <strong style="color:#ccc;">fpf-mundial2026.com</strong> não é o domínio oficial da FPF (<strong style="color:#ccc;">fpf.pt</strong>). Qualquer pessoa pode registar domínios parecidos.</span></div>
+      <div class="anno"><span class="anno-num">2</span> <span>Saudação genérica "colaborador(a)" — a FPF não sabe o seu nome, o que indica que é um email em massa enviado a muitas pessoas.</span></div>
+      <div class="anno"><span class="anno-num">3</span> <span>Urgência artificial com prazo de 4 dias e linguagem em maiúsculas — técnica clássica para impedir que pense antes de agir.</span></div>
+      <div class="anno"><span class="anno-num">4</span> <span>Prémio desproporcionado (bilhetes + voo + hotel) sem qualquer critério de elegibilidade explicado — demasiado bom para ser verdade.</span></div>
+    </div>
+  </section>
+
+  <!-- BOAS PRÁTICAS -->
+  <section id="praticas">
+    <div class="section-label">05 — Proteção</div>
+    <h2>Boas práticas de segurança</h2>
+    <p>Hábitos simples que reduzem drasticamente o risco de ser vítima de phishing.</p>
+    <div class="divider"></div>
+
+    <div class="praticas-grid" style="margin-top:20px;">
+      <div class="pratica-card">
+        <span class="pratica-badge badge-green">Essencial</span>
+        <h4>Verifique sempre o remetente</h4>
+        <p>Não olhe só para o nome — verifique o endereço de email completo. Domínios como @empresa-suporte.com ou @banco-seguro.net são falsos.</p>
+      </div>
+      <div class="pratica-card">
+        <span class="pratica-badge badge-green">Essencial</span>
+        <h4>Não clique — navegue diretamente</h4>
+        <p>Em vez de clicar no link do email, abra o browser e escreva o endereço oficial. Nunca confie em links de email para aceder a contas importantes.</p>
+      </div>
+      <div class="pratica-card">
+        <span class="pratica-badge badge-green">Essencial</span>
+        <h4>Use autenticação de 2 fatores (2FA)</h4>
+        <p>Mesmo que a sua password seja roubada, o 2FA impede o acesso à conta. Ative em todos os serviços que o suportam.</p>
+      </div>
+      <div class="pratica-card">
+        <span class="pratica-badge badge-yellow">Importante</span>
+        <h4>Passwords únicas e fortes</h4>
+        <p>Use um gestor de passwords (Bitwarden, 1Password). Nunca reutilize a mesma password em vários serviços — uma credencial roubada compromete tudo.</p>
+      </div>
+      <div class="pratica-card">
+        <span class="pratica-badge badge-yellow">Importante</span>
+        <h4>Mantenha o software atualizado</h4>
+        <p>Atualizações de segurança corrigem vulnerabilidades. Sistema operativo, browser e antivírus devem estar sempre na versão mais recente.</p>
+      </div>
+      <div class="pratica-card">
+        <span class="pratica-badge badge-yellow">Importante</span>
+        <h4>Desconfie de urgência</h4>
+        <p>Qualquer mensagem que exija ação imediata deve ser tratada com suspeita. Tome 30 segundos para verificar a legitimidade antes de agir.</p>
+      </div>
+      <div class="pratica-card">
+        <span class="pratica-badge badge-orange">Avançado</span>
+        <h4>Verifique certificados SSL</h4>
+        <p>Antes de inserir dados num site, confirme que o URL começa com <strong style="color:#ccc;">https://</strong> e que o domínio é o correto. O cadeado não garante que o site é legítimo — apenas que a ligação é encriptada.</p>
+      </div>
+      <div class="pratica-card">
+        <span class="pratica-badge badge-orange">Avançado</span>
+        <h4>Cuidado com Wi-Fi público</h4>
+        <p>Evite aceder a contas importantes em redes públicas. Se necessário, use uma VPN. Atacantes podem monitorizar tráfego em redes abertas.</p>
+      </div>
+      <div class="pratica-card">
+        <span class="pratica-badge badge-red">Crítico na empresa</span>
+        <h4>Nunca transfira dinheiro por email</h4>
+        <p>Pedidos de transferência urgente por email são quase sempre fraude (CEO fraud/BEC). Confirme sempre por telefone antes de executar qualquer pagamento.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- O QUE FAZER -->
+  <section id="fazer">
+    <div class="section-label">06 — Resposta a Incidentes</div>
+    <h2>O que fazer se suspeitar de um ataque</h2>
+    <p>Se receber um email suspeito — ou se já clicou em algo — siga estes passos.</p>
+    <div class="divider"></div>
+
+    <div class="steps" style="margin-top:20px;">
+      <div class="step">
+        <h4>Não clique em mais nada</h4>
+        <p>Se ainda não clicou, não o faça. Se já clicou mas não inseriu dados, feche a página imediatamente e não forneça qualquer informação.</p>
+      </div>
+      <div class="step">
+        <h4>Reporte ao departamento de IT / Segurança</h4>
+        <p>Encaminhe o email suspeito para a equipa de segurança da sua organização. Não o apague antes — pode ser importante para a investigação.</p>
+      </div>
+      <div class="step">
+        <h4>Se inseriu credenciais — mude as passwords</h4>
+        <p>Altere imediatamente a password comprometida e de qualquer outro serviço onde use a mesma. Faça-o a partir de um dispositivo seguro.</p>
+      </div>
+      <div class="step">
+        <h4>Se inseriu dados bancários — contacte o banco</h4>
+        <p>Ligue imediatamente para a linha de segurança do seu banco e informe da situação. Podem bloquear transações e monitorizar a conta.</p>
+      </div>
+      <div class="step">
+        <h4>Ative a autenticação de 2 fatores</h4>
+        <p>Em todas as contas afetadas e, aproveitando o momento, em todas as contas importantes que ainda não tenham 2FA ativo.</p>
+      </div>
+      <div class="step">
+        <h4>Documente tudo</h4>
+        <p>Guarde screenshots do email, URL do site falso e qualquer comunicação. Esta informação é útil para investigação interna e para reportar às autoridades se necessário.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <h2>Partilhe este guia</h2>
+    <p>A cibersegurança é responsabilidade de todos. Partilhe este conhecimento com colegas, família e amigos.</p>
+    <a href="mailto:?subject=Guia%20Anti-Phishing&body=Aqui%20está%20um%20guia%20útil%20sobre%20como%20detetar%20e%20evitar%20ataques%20de%20phishing.">📤 Partilhar por Email</a>
+  </div>
+
+</main>
+
+<footer>
+  Exercício de sensibilização conduzido pelo departamento de Cibersegurança · Todos os dados introduzidos foram descartados e não foram armazenados
+</footer>
+
+</body>
+</html>
